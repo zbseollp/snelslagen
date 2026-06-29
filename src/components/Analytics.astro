@@ -14,7 +14,7 @@ const GA_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || "";
       gtag("js", new Date());
       gtag("config", GA_ID, { anonymize_ip: true });
     }
-    if (localStorage.getItem("ato-consent") === "granted") loadGA();
+    if (localStorage.getItem("ss-consent") === "granted") loadGA();
     window.addEventListener("consent:granted", loadGA);
   </script>
 )}
