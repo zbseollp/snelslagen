@@ -1,0 +1,41 @@
+---
+import { SITE } from "@lib/site";
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+  image?: string;
+  noindex?: boolean;
+  type?: string;
+}
+const {
+  title,
+  description = SITE.description,
+  canonicalPath = new URL(Astro.request.url).pathname,
+  image = "/og-default.png",
+  noindex = false,
+  type = "website",
+} = Astro.props;
+
+const fullTitle = title ? `${title}` : `${SITE.name} | ${SITE.tagline}`;
+const canonical = new URL(canonicalPath, SITE.url).href;
+const ogImage = new URL(image, SITE.url).href;
+---
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap-index.xml" />
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:locale" content={SITE.locale} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<slot />

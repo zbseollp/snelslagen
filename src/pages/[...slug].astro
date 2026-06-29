@@ -1,0 +1,89 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Container from "@components/Container.astro";
+import BlogPostLayout from "@layouts/BlogPostLayout.astro";
+import { SITE } from "@lib/site";
+import { readingMinutes } from "@lib/posts";
+
+export async function getStaticPaths() {
+  const RESERVED = new Set(["home", "contact", "verkeersborden-oefenen", "cursus", "mijn-account", "over-ons", "blog", "sitemap"]);
+  const CLEAN = /^[a-z0-9][a-z0-9-]*$/;
+  const pages = (await getCollection("pages"))
+    .filter((p) => CLEAN.test(p.id) && !RESERVED.has(p.id))
+    .map((page) => ({ params: { slug: page.id }, props: { entry: page, kind: "page" } }));
+  const posts = (await getCollection("blog", (p) => !p.data.draft))
+    .filter((p) => CLEAN.test(p.id) && !RESERVED.has(p.id))
+    .map((post) => ({ params: { slug: post.id }, props: { entry: post, kind: "post" } }));
+  return [...pages, ...posts];
+}
+
+const { entry, kind } = Astro.props;
+const { Content } = await render(entry);
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: SITE.url + "/" },
+    { "@type": "ListItem", position: 2, name: entry.data.title, item: new URL(`/${entry.id}/`, SITE.url).href },
+  ],
+};
+---
+{kind === "post" ? (
+  <BlogPostLayout post={entry} readMin={readingMinutes(entry.body)}>
+    <Content />
+  </BlogPostLayout>
+) : (
+  <BaseLayout title={entry.data.metaTitle || entry.data.title} description={entry.data.metaDescription}>
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} is:inline />
+    <div class="border-b border-slate-100">
+      <Container class="max-w-3xl py-3">
+        <nav class="text-xs text-slate-400">
+          <a href="/" class="hover:text-brand-600">Home</a>
+          <span class="mx-1.5">/</span>
+          <span class="text-slate-600">{entry.data.title}</span>
+        </nav>
+      </Container>
+    </div>
+
+    <div class="bg-slate-900 text-white">
+      <Container class="max-w-3xl py-10">
+        <h1 class="text-3xl font-extrabold tracking-tight leading-tight sm:text-4xl">{entry.data.title}</h1>
+      </Container>
+    </div>
+
+    <Container class="max-w-3xl">
+      <a href="/verkeersborden-oefenen/" class="my-8 flex items-center justify-between gap-4 bg-brand-50 border border-brand-100 p-5 hover:bg-brand-100 transition-colors">
+        <div>
+          <p class="font-bold text-slate-900 text-sm">Direct oefenen?</p>
+          <p class="text-sm text-slate-600">Test je kennis met de gratis verkeersbordenquiz. 20 vragen, geen account nodig.</p>
+        </div>
+        <span class="hidden shrink-0 bg-brand-600 text-white text-sm font-bold px-5 py-2 sm:inline-block">Start quiz →</span>
+      </a>
+
+      <div class="article-prose pb-(--spacing-section)">
+        <Content />
+      </div>
+
+      <aside class="mb-(--spacing-section) border border-slate-100 bg-slate-50 p-6">
+        <h2 class="text-base font-bold text-slate-900 mb-3">Populaire onderwerpen</h2>
+        <ul class="grid gap-2 sm:grid-cols-2">
+          {SITE.popular.filter((i) => i.href !== `/${entry.id}/`).slice(0, 6).map((i) => (
+            <li><a class="text-brand-600 hover:underline text-sm" href={i.href}>{i.label}</a></li>
+          ))}
+        </ul>
+      </aside>
+    </Container>
+
+    <section class="bg-brand-600 text-white">
+      <Container class="py-10 flex flex-col sm:flex-row items-center justify-between gap-5">
+        <div>
+          <p class="font-extrabold text-lg">Klaar om te slagen?</p>
+          <p class="text-brand-200 text-sm mt-0.5">Meer dan 423.000 cursisten gingen je voor.</p>
+        </div>
+        <a href="/cursus/" class="shrink-0 bg-white text-brand-700 font-bold px-6 py-2.5 text-sm hover:bg-brand-50 transition-colors">Bekijk de cursus →</a>
+      </Container>
+    </section>
+  </BaseLayout>
+)}

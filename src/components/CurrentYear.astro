@@ -1,0 +1,9 @@
+---
+const year = new Date().getFullYear();
+---
+<span data-current-year>{year}</span>
+<script>
+  document
+    .querySelectorAll("[data-current-year]")
+    .forEach((el) => (el.textContent = new Date().getFullYear().toString()));
+</script>

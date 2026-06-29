@@ -1,0 +1,196 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Container from "@components/Container.astro";
+import signsRaw from "../data/signs.json";
+
+const signs = (signsRaw as { id: string; name: string; image: string }[])
+  .filter((s) => s.name && s.name.trim() && s.name.toLowerCase() !== "bord")
+  .map((s) => ({ id: s.id, name: s.name.trim(), image: `/assets/images/signs/${s.id}.png` }));
+---
+<BaseLayout
+  title="Verkeersborden oefenen — gratis quiz | SnelSlagen.nl"
+  description="Oefen gratis alle Nederlandse verkeersborden. Test in 20 vragen of jij weet wat elk bord betekent. Direct starten, geen account nodig."
+>
+  <!-- Page header -->
+  <div class="bg-slate-900 text-white">
+    <Container class="py-14">
+      <p class="text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">Gratis oefenen</p>
+      <h1 class="text-4xl font-extrabold tracking-tight">Verkeersborden oefenen</h1>
+      <p class="mt-3 text-slate-400 max-w-xl">
+        Test je kennis met 20 willekeurige verkeersborden. Gratis, geen account nodig.
+      </p>
+    </Container>
+  </div>
+
+  <Container class="py-(--spacing-section)">
+    <div id="quiz" class="mx-auto max-w-3xl border border-slate-200 bg-white">
+      <!-- Start screen -->
+      <div data-screen="start" class="p-8 sm:p-10">
+        <p class="text-xs font-bold uppercase tracking-widest text-brand-600 mb-3">Quiz</p>
+        <h2 class="text-2xl font-extrabold text-slate-900 mb-2">Klaar om te beginnen?</h2>
+        <p class="text-slate-500 mb-6">Je krijgt 20 borden te zien. Klik op het juiste antwoord en zie meteen of je het goed hebt.</p>
+        <button data-action="start" class="inline-flex items-center bg-brand-600 text-white font-bold px-7 py-3 hover:bg-brand-700 transition-colors">
+          Start de quiz
+        </button>
+      </div>
+
+      <!-- Question screen -->
+      <div data-screen="question" class="hidden p-6 sm:p-8">
+        <div class="flex items-center justify-between text-sm font-medium text-slate-500 mb-3">
+          <span>Vraag <span data-current>1</span> / 20</span>
+          <span class="font-bold text-slate-900">Score: <span data-score>0</span></span>
+        </div>
+        <div class="h-1.5 w-full bg-slate-100 mb-6">
+          <div data-progress class="h-full bg-brand-600 transition-all" style="width:5%"></div>
+        </div>
+
+        <div class="grid items-center gap-6 sm:grid-cols-2">
+          <div class="flex justify-center bg-slate-50 border border-slate-100 p-6">
+            <img data-sign alt="Verkeersbord" width="200" height="200"
+                 class="h-auto w-40 object-contain sm:w-48" />
+          </div>
+          <div>
+            <h2 class="text-xl font-extrabold text-slate-900 mb-4">Wat betekent dit bord?</h2>
+            <div data-options class="flex flex-col gap-2.5"></div>
+          </div>
+        </div>
+
+        <div class="mt-6 flex items-center justify-between border-t border-slate-100 pt-4">
+          <p data-feedback class="text-sm font-semibold"></p>
+          <button data-action="next" class="hidden bg-brand-600 text-white font-bold px-6 py-2.5 text-sm hover:bg-brand-700 transition-colors">Volgende vraag</button>
+        </div>
+      </div>
+
+      <!-- Result screen -->
+      <div data-screen="result" class="hidden p-8 sm:p-10 text-center">
+        <div class="w-16 h-16 bg-brand-600 flex items-center justify-center mx-auto mb-5">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <h2 class="text-2xl font-extrabold text-slate-900">Quiz afgerond!</h2>
+        <p class="mt-3 text-lg text-slate-600">Je had <span data-final class="font-extrabold text-brand-600">0</span> van de 20 goed.</p>
+        <p data-verdict class="mt-2 text-slate-500 text-sm"></p>
+        <div class="mt-6 flex justify-center gap-3">
+          <button data-action="restart" class="bg-brand-600 text-white font-bold px-7 py-3 hover:bg-brand-700 transition-colors text-sm">
+            Opnieuw oefenen
+          </button>
+          <a href="/cursus/" class="border-2 border-slate-200 text-slate-700 font-bold px-6 py-3 hover:border-brand-500 hover:text-brand-600 transition-colors text-sm">
+            Cursus bekijken
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 text-center">
+      <p class="text-sm text-slate-500">Wil je het complete CBR-examen oefenen inclusief gevaarherkenning?</p>
+      <a href="/cursus/" class="mt-2 inline-block text-sm font-bold text-brand-600 hover:underline">Bekijk de volledige cursus →</a>
+    </div>
+  </Container>
+
+  <script id="signs-data" type="application/json" set:html={JSON.stringify(signs)} is:inline></script>
+  <script>
+    type Sign = { id: string; name: string; image: string };
+    const all: Sign[] = JSON.parse(document.getElementById("signs-data")!.textContent || "[]");
+    const TOTAL = 20;
+    const root = document.getElementById("quiz")!;
+    const screens = {
+      start: root.querySelector('[data-screen="start"]')!,
+      question: root.querySelector('[data-screen="question"]')!,
+      result: root.querySelector('[data-screen="result"]')!,
+    };
+    const el = {
+      sign: root.querySelector("[data-sign]") as HTMLImageElement,
+      options: root.querySelector("[data-options]")!,
+      current: root.querySelector("[data-current]")!,
+      score: root.querySelector("[data-score]")!,
+      progress: root.querySelector("[data-progress]") as HTMLElement,
+      feedback: root.querySelector("[data-feedback]")!,
+      next: root.querySelector('[data-action="next"]') as HTMLButtonElement,
+      final: root.querySelector("[data-final]")!,
+      verdict: root.querySelector("[data-verdict]")!,
+    };
+
+    let deck: Sign[] = [];
+    let idx = 0;
+    let score = 0;
+    let answered = false;
+
+    const shuffle = <T,>(a: T[]): T[] => {
+      const r = [...a];
+      for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; }
+      return r;
+    };
+    const show = (name: keyof typeof screens) => {
+      Object.entries(screens).forEach(([k, n]) => n.classList.toggle("hidden", k !== name));
+    };
+
+    function start() {
+      deck = shuffle(all).slice(0, TOTAL);
+      idx = 0; score = 0;
+      el.score.textContent = "0";
+      show("question");
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      answered = false;
+      const sign = deck[idx];
+      el.current.textContent = String(idx + 1);
+      el.progress.style.width = `${((idx) / TOTAL) * 100 + 5}%`;
+      el.sign.src = sign.image;
+      el.sign.alt = "Verkeersbord";
+      el.feedback.textContent = "";
+      el.next.classList.add("hidden");
+
+      const distractors = shuffle(all.filter((s) => s.name !== sign.name))
+        .reduce<string[]>((acc, s) => { if (acc.length < 3 && !acc.includes(s.name)) acc.push(s.name); return acc; }, []);
+      const options = shuffle([sign.name, ...distractors]);
+
+      el.options.innerHTML = "";
+      for (const opt of options) {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "flex items-center gap-3 border border-slate-200 px-4 py-3 text-left text-slate-800 text-sm transition hover:border-brand-400 hover:bg-brand-50";
+        b.innerHTML = `<span class="grid h-5 w-5 shrink-0 place-items-center border border-slate-300 text-xs"></span><span>${opt}</span>`;
+        b.addEventListener("click", () => choose(b, opt, sign.name));
+        el.options.appendChild(b);
+      }
+    }
+
+    function choose(btn: HTMLButtonElement, picked: string, correct: string) {
+      if (answered) return;
+      answered = true;
+      const buttons = [...el.options.querySelectorAll("button")] as HTMLButtonElement[];
+      buttons.forEach((b) => (b.disabled = true));
+      buttons.forEach((b) => {
+        const label = b.querySelector("span:last-child")?.textContent?.trim();
+        if (label === correct) b.className = "flex items-center gap-3 border border-green-500 bg-green-50 text-green-900 px-4 py-3 text-left text-sm";
+      });
+      if (picked === correct) {
+        score++; el.score.textContent = String(score);
+        el.feedback.textContent = "Goed! ✅"; el.feedback.className = "text-sm font-semibold text-green-700";
+      } else {
+        btn.className = "flex items-center gap-3 border border-red-400 bg-red-50 text-red-900 px-4 py-3 text-left text-sm";
+        el.feedback.textContent = `Helaas — juist: ${correct}`; el.feedback.className = "text-sm font-semibold text-red-600";
+      }
+      el.next.classList.remove("hidden");
+    }
+
+    function next() {
+      idx++;
+      if (idx >= TOTAL) return finish();
+      renderQuestion();
+    }
+
+    function finish() {
+      show("result");
+      el.final.textContent = String(score);
+      el.verdict.textContent = score >= 17 ? "Top! Je bent er klaar voor."
+        : score >= 12 ? "Goed bezig — nog even oefenen en je slaagt!"
+        : "Blijf oefenen, je komt er wel!";
+    }
+
+    root.querySelector('[data-action="start"]')?.addEventListener("click", start);
+    el.next.addEventListener("click", next);
+    root.querySelector('[data-action="restart"]')?.addEventListener("click", start);
+  </script>
+</BaseLayout>

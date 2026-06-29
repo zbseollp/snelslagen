@@ -1,0 +1,66 @@
+---
+import Container from "@components/Container.astro";
+import CurrentYear from "@components/CurrentYear.astro";
+import { SITE } from "@lib/site";
+import { getRecentPosts, displayTitle } from "@lib/posts";
+const recent = (await getRecentPosts(5)).map((p) => ({ slug: p.id, title: displayTitle(p) }));
+---
+<footer class="mt-(--spacing-section) bg-slate-900 text-slate-400">
+  <div class="h-1 bg-brand-600 w-full"></div>
+  <Container class="grid gap-10 py-14 md:grid-cols-12">
+    <div class="md:col-span-4">
+      <a href="/" class="flex items-center gap-2.5 text-white mb-4">
+        <div class="w-8 h-8 bg-brand-600 flex items-center justify-center shrink-0" style="border-radius:2px">
+          <svg width="18" height="13" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M3 13L1 11.5C1 11.5 5 5.5 11 5.5C17 5.5 21 11.5 21 11.5L19 13" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="11" cy="5.5" r="2" fill="white"/>
+            <path d="M11 5.5L14 10.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="font-extrabold text-base">Snel<span class="text-brand-400">Slagen</span>.nl</span>
+      </a>
+      <p class="text-sm text-slate-500 max-w-xs leading-relaxed">
+        De slimste route naar je rijbewijs. Meer dan 423.000 cursisten gingen je voor.
+      </p>
+      <a href="/cursus/" class="mt-5 inline-flex items-center bg-brand-600 text-white text-sm font-bold px-5 py-2.5 hover:bg-brand-700 transition-colors">
+        Bekijk de cursus
+      </a>
+    </div>
+
+    <div class="md:col-span-2">
+      <h3 class="text-xs font-bold uppercase tracking-widest text-brand-400 mb-4">Menu</h3>
+      <ul class="space-y-2.5 text-sm">
+        {SITE.nav.map((i) => (
+          <li><a class="text-slate-500 hover:text-white transition-colors" href={i.href}>{i.label}</a></li>
+        ))}
+        <li><a class="text-slate-500 hover:text-white transition-colors" href="/mijn-account/">Mijn account</a></li>
+        <li><a class="text-slate-500 hover:text-white transition-colors" href="/sitemap/">Sitemap</a></li>
+      </ul>
+    </div>
+
+    <div class="md:col-span-3">
+      <h3 class="text-xs font-bold uppercase tracking-widest text-brand-400 mb-4">Populaire onderwerpen</h3>
+      <ul class="space-y-2.5 text-sm">
+        {SITE.popular.map((i) => (
+          <li><a class="text-slate-500 hover:text-white transition-colors" href={i.href}>{i.label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="md:col-span-3">
+      <h3 class="text-xs font-bold uppercase tracking-widest text-brand-400 mb-4">Recente artikelen</h3>
+      <ul class="space-y-2.5 text-sm">
+        {recent.map((p) => (
+          <li><a class="text-slate-500 hover:text-white transition-colors leading-snug block" href={`/${p.slug}/`}>{p.title}</a></li>
+        ))}
+      </ul>
+    </div>
+  </Container>
+
+  <div class="border-t border-slate-800 py-5">
+    <Container class="flex flex-col items-center justify-between gap-2 text-xs text-slate-600 sm:flex-row">
+      <p>© <CurrentYear /> SnelSlagen.nl. Alle rechten voorbehouden.</p>
+      <p>Niet gelieerd aan CBR of de Rijksoverheid.</p>
+    </Container>
+  </div>
+</footer>

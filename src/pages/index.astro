@@ -1,0 +1,240 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Container from "@components/Container.astro";
+import { getRecentPosts, displayTitle, displayDescription, formatDate } from "@lib/posts";
+import { SITE } from "@lib/site";
+
+const recent = await getRecentPosts(6);
+
+const products = [
+  {
+    name: "Basis",
+    price: "9,99",
+    desc: "Ideaal om te starten met de theorie.",
+    features: ["Volledige theoriecursus", "Verkeersborden module", "Oefenvragen CBR-stijl", "30 dagen toegang"],
+    cta: "Start nu",
+    highlighted: false,
+  },
+  {
+    name: "Compleet",
+    price: "14,00",
+    desc: "De meest gekozen optie door onze cursisten.",
+    features: ["Alles uit Basis", "Gevaarherkenning video's", "Onbeperkte oefenexamens", "90 dagen toegang", "Slagingsgarantie"],
+    cta: "Kies Compleet",
+    highlighted: true,
+  },
+  {
+    name: "Premium",
+    price: "19,99",
+    desc: "Voor wie zeker wil zijn van slagen.",
+    features: ["Alles uit Compleet", "Persoonlijke voortgang", "Video-uitleg per onderwerp", "Onbeperkte toegang", "Prioriteit support"],
+    cta: "Start Premium",
+    highlighted: false,
+  },
+];
+
+const steps = [
+  { n: "01", title: "Kies je pakket", body: "Kies het pakket dat bij jou past. Basis, Compleet of Premium — elk met directe toegang." },
+  { n: "02", title: "Leer op jouw tempo", body: "Doorloop de theorie met video's, uitleg en oefenvragen. Geen lesschema, geen druk." },
+  { n: "03", title: "Oefen tot je klaar bent", body: "Maak oefenexamens in CBR-stijl tot je consistent scoort. Dan ben je klaar." },
+];
+
+const jsonld = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "Organization", "@id": `${SITE.url}/#org`, name: SITE.name, url: SITE.url },
+    { "@type": "WebSite", "@id": `${SITE.url}/#website`, url: SITE.url, name: SITE.name, publisher: { "@id": `${SITE.url}/#org` }, inLanguage: "nl-NL" },
+  ],
+};
+---
+<BaseLayout
+  title="SnelSlagen — Snel slagen voor je rijbewijs theorie-examen"
+  description={SITE.description}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonld)} is:inline />
+
+  <!-- Stats strip -->
+  <div class="bg-brand-600 text-white">
+    <Container class="py-3">
+      <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-1 text-sm">
+        <span class="font-bold">423.033 cursisten</span>
+        <span class="hidden sm:block text-brand-300">·</span>
+        <span>80% slaagt in de eerste poging</span>
+        <span class="hidden sm:block text-brand-300">·</span>
+        <span>9+ jaar online</span>
+        <span class="hidden sm:block text-brand-300">·</span>
+        <span>Geen account vereist voor oefenen</span>
+      </div>
+    </Container>
+  </div>
+
+  <!-- Hero -->
+  <section class="border-b border-slate-100">
+    <Container class="grid lg:grid-cols-2 gap-12 py-(--spacing-section) items-center">
+      <!-- Left: headline + CTA -->
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest text-brand-600 mb-3">Theorie-examen voorbereiding</p>
+        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
+          Snel slagen voor<br class="hidden sm:block"> je rijbewijs
+        </h1>
+        <p class="mt-5 text-lg text-slate-600 max-w-md leading-relaxed">
+          De complete cursus om je CBR theorie-examen te halen. Duidelijke uitleg, oefenexamens en verkeersborden — alles op één plek.
+        </p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="/cursus/" class="inline-flex items-center bg-brand-600 text-white font-bold px-6 py-3 hover:bg-brand-700 transition-colors text-sm" style="border-radius:3px">
+            Bekijk de cursus
+          </a>
+          <a href="/verkeersborden-oefenen/" class="inline-flex items-center border-2 border-slate-200 text-slate-700 font-bold px-6 py-3 hover:border-brand-500 hover:text-brand-600 transition-colors text-sm" style="border-radius:3px">
+            Gratis oefenen
+          </a>
+        </div>
+        <p class="mt-4 text-xs text-slate-400">Geen registratie nodig voor de oefenquiz</p>
+      </div>
+
+      <!-- Right: quick stats + product preview -->
+      <div class="grid grid-cols-2 gap-4">
+        {[
+          { v: "423K+", l: "Cursisten" },
+          { v: "80%", l: "Slaagt eerste keer" },
+          { v: "200+", l: "Verkeersborden" },
+          { v: "9 jr", l: "Online ervaring" },
+        ].map(({ v, l }) => (
+          <div class="bg-slate-50 border border-slate-100 p-5">
+            <div class="text-3xl font-black text-brand-600 leading-none">{v}</div>
+            <div class="text-xs text-slate-500 mt-1.5 font-medium">{l}</div>
+          </div>
+        ))}
+        <div class="col-span-2 bg-brand-600 text-white p-5 flex items-center justify-between">
+          <div>
+            <p class="font-bold text-sm">Verkeersborden quiz</p>
+            <p class="text-brand-200 text-xs mt-0.5">Gratis, 20 vragen, geen account</p>
+          </div>
+          <a href="/verkeersborden-oefenen/" class="shrink-0 bg-white text-brand-600 font-bold text-xs px-4 py-2 hover:bg-brand-50 transition-colors">
+            Start nu
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Products -->
+  <section class="bg-slate-50 border-b border-slate-100">
+    <Container class="py-(--spacing-section)">
+      <div class="text-center mb-10">
+        <p class="text-xs font-bold uppercase tracking-widest text-brand-600 mb-2">Cursuspakketten</p>
+        <h2 class="text-3xl font-extrabold text-slate-900">Kies jouw pakket</h2>
+        <p class="mt-2 text-slate-500">Directe toegang. Geen verborgen kosten.</p>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+        {products.map((p) => (
+          <div class:list={["relative flex flex-col border-2 bg-white", p.highlighted ? "border-brand-600 shadow-lg" : "border-slate-200"]}>
+            {p.highlighted && (
+              <div class="absolute -top-3.5 left-1/2 -translate-x-1/2">
+                <span class="bg-brand-600 text-white text-[11px] font-black uppercase tracking-wider px-3 py-1">Meest gekozen</span>
+              </div>
+            )}
+            <div class="p-6 flex flex-col flex-1">
+              <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">{p.name}</p>
+              <div class="flex items-end gap-1 mb-1">
+                <span class="text-4xl font-black text-slate-900">€{p.price}</span>
+                <span class="text-slate-400 text-sm mb-1.5">eenmalig</span>
+              </div>
+              <p class="text-sm text-slate-500 mb-5">{p.desc}</p>
+              <ul class="space-y-2 flex-1 mb-6">
+                {p.features.map((f) => (
+                  <li class="flex items-start gap-2 text-sm text-slate-700">
+                    <svg class="w-4 h-4 text-brand-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <a href="/cursus/" class:list={["block text-center font-bold py-3 text-sm transition-colors", p.highlighted ? "bg-brand-600 text-white hover:bg-brand-700" : "border-2 border-slate-200 text-slate-700 hover:border-brand-500 hover:text-brand-600"]}>
+                {p.cta}
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- How it works -->
+  <section class="border-b border-slate-100">
+    <Container class="py-(--spacing-section)">
+      <div class="text-center mb-10">
+        <p class="text-xs font-bold uppercase tracking-widest text-brand-600 mb-2">Zo werkt het</p>
+        <h2 class="text-3xl font-extrabold text-slate-900">Van aanmelden tot slagen</h2>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
+        {steps.map((s) => (
+          <div class="relative">
+            <div class="text-6xl font-black text-slate-100 leading-none mb-3 select-none">{s.n}</div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">{s.title}</h3>
+            <p class="text-sm text-slate-500 leading-relaxed">{s.body}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Blog -->
+  {recent.length > 0 && (
+    <section class="border-b border-slate-100">
+      <Container class="py-(--spacing-section)">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-widest text-brand-600 mb-1">Theorieblog</p>
+            <h2 class="text-2xl font-extrabold text-slate-900">Recente artikelen</h2>
+          </div>
+          <a href="/blog/" class="text-sm font-bold text-brand-600 hover:text-brand-700 transition-colors">
+            Alle artikelen →
+          </a>
+        </div>
+        <div class="divide-y divide-slate-100">
+          {recent.map((post) => {
+            const title = displayTitle(post);
+            const desc = displayDescription(post);
+            return (
+              <article class="py-5 group">
+                <a href={`/${post.id}/`} class="flex items-start gap-5">
+                  <div class="w-1 self-stretch bg-slate-200 group-hover:bg-brand-500 transition-colors shrink-0"></div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-3 text-xs text-slate-400 mb-1.5">
+                      <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+                      {post.data.categories[0] && (
+                        <span class="bg-slate-100 text-slate-500 px-2 py-0.5 font-medium">{post.data.categories[0]}</span>
+                      )}
+                    </div>
+                    <h3 class="font-bold text-slate-900 group-hover:text-brand-600 transition-colors leading-snug">{title}</h3>
+                    {desc && <p class="mt-1 text-sm text-slate-500 line-clamp-1">{desc}</p>}
+                  </div>
+                  {post.data.featuredImage && (
+                    <img src={post.data.featuredImage} alt={post.data.featuredImageAlt || title} class="w-20 h-14 object-cover shrink-0 hidden sm:block" loading="lazy" />
+                  )}
+                </a>
+              </article>
+            );
+          })}
+        </div>
+      </Container>
+    </section>
+  )}
+
+  <!-- CTA band -->
+  <section class="bg-slate-900 text-white">
+    <Container class="py-16 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div>
+        <h2 class="text-2xl font-extrabold">Klaar om te beginnen?</h2>
+        <p class="mt-1 text-slate-400">Sluit je aan bij 423.000+ cursisten die snel slaagden.</p>
+      </div>
+      <div class="flex gap-3 shrink-0">
+        <a href="/cursus/" class="inline-flex items-center bg-brand-600 text-white font-bold px-6 py-3 hover:bg-brand-700 transition-colors text-sm">
+          Cursus bekijken
+        </a>
+        <a href="/verkeersborden-oefenen/" class="inline-flex items-center border border-slate-600 text-slate-300 font-medium px-5 py-3 hover:border-slate-400 hover:text-white transition-colors text-sm">
+          Gratis oefenen
+        </a>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

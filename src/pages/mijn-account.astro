@@ -1,0 +1,132 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Container from "@components/Container.astro";
+---
+<BaseLayout
+  title="Mijn account — Inloggen of registreren | SnelSlagen.nl"
+  description="Log in op je SnelSlagen account of maak een nieuw account aan voor toegang tot je cursus."
+>
+  <div class="bg-slate-900 text-white">
+    <Container class="py-12">
+      <p class="text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">Cursus toegang</p>
+      <h1 class="text-3xl font-extrabold tracking-tight">Mijn account</h1>
+      <p class="mt-2 text-slate-400 max-w-lg">Log in of maak een account aan om toegang te krijgen tot je cursus.</p>
+    </Container>
+  </div>
+
+  <Container class="py-(--spacing-section)">
+    <div class="mx-auto max-w-md">
+      <!-- Tabs -->
+      <div class="flex border-b border-slate-200 mb-8">
+        <button
+          id="tab-login"
+          class="flex-1 py-3 text-sm font-bold border-b-2 border-brand-600 text-brand-600 transition-colors"
+          onclick="switchTab('login')"
+        >Inloggen</button>
+        <button
+          id="tab-register"
+          class="flex-1 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500 transition-colors hover:text-slate-700"
+          onclick="switchTab('register')"
+        >Account aanmaken</button>
+      </div>
+
+      <!-- Login form -->
+      <div id="panel-login">
+        <form onsubmit="return false;" class="space-y-5">
+          <div>
+            <label for="login-email" class="block text-sm font-medium text-slate-700 mb-1.5">E-mailadres</label>
+            <input
+              id="login-email" type="email" placeholder="jouw@email.nl" autocomplete="email"
+              class="w-full border border-slate-200 px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+            />
+          </div>
+          <div>
+            <label for="login-password" class="block text-sm font-medium text-slate-700 mb-1.5">Wachtwoord</label>
+            <input
+              id="login-password" type="password" placeholder="••••••••" autocomplete="current-password"
+              class="w-full border border-slate-200 px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+            />
+          </div>
+          <div class="flex items-center justify-between text-sm">
+            <label class="flex items-center gap-2 text-slate-600">
+              <input type="checkbox" class="accent-brand-600" /> Onthoud mij
+            </label>
+            <a href="#" class="text-brand-600 hover:underline">Wachtwoord vergeten?</a>
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-brand-600 text-white font-bold py-3 hover:bg-brand-700 transition-colors text-sm"
+          >Inloggen</button>
+        </form>
+        <p class="mt-5 text-center text-sm text-slate-500">
+          Nog geen account?
+          <button onclick="switchTab('register')" class="text-brand-600 font-semibold hover:underline">Maak er een aan</button>
+        </p>
+      </div>
+
+      <!-- Register form -->
+      <div id="panel-register" class="hidden">
+        <form onsubmit="return false;" class="space-y-5">
+          <div>
+            <label for="reg-name" class="block text-sm font-medium text-slate-700 mb-1.5">Naam</label>
+            <input
+              id="reg-name" type="text" placeholder="Jouw naam" autocomplete="name"
+              class="w-full border border-slate-200 px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+            />
+          </div>
+          <div>
+            <label for="reg-email" class="block text-sm font-medium text-slate-700 mb-1.5">E-mailadres</label>
+            <input
+              id="reg-email" type="email" placeholder="jouw@email.nl" autocomplete="email"
+              class="w-full border border-slate-200 px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+            />
+          </div>
+          <div>
+            <label for="reg-password" class="block text-sm font-medium text-slate-700 mb-1.5">Wachtwoord</label>
+            <input
+              id="reg-password" type="password" placeholder="Kies een wachtwoord" autocomplete="new-password"
+              class="w-full border border-slate-200 px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-brand-600 text-white font-bold py-3 hover:bg-brand-700 transition-colors text-sm"
+          >Account aanmaken</button>
+          <p class="text-xs text-slate-400 text-center">Door te registreren ga je akkoord met onze voorwaarden.</p>
+        </form>
+        <p class="mt-5 text-center text-sm text-slate-500">
+          Al een account?
+          <button onclick="switchTab('login')" class="text-brand-600 font-semibold hover:underline">Inloggen</button>
+        </p>
+      </div>
+
+      <div class="mt-10 p-5 bg-brand-50 border border-brand-100">
+        <p class="text-sm font-semibold text-brand-800 mb-1">Nog geen cursus gekocht?</p>
+        <p class="text-sm text-brand-700">Bekijk onze pakketten. Directe toegang na betaling.</p>
+        <a href="/cursus/" class="mt-3 inline-block text-sm font-bold text-brand-600 hover:underline">Bekijk de cursus →</a>
+      </div>
+    </div>
+  </Container>
+</BaseLayout>
+
+<script>
+  function switchTab(tab: string) {
+    const loginBtn = document.getElementById("tab-login")!;
+    const registerBtn = document.getElementById("tab-register")!;
+    const loginPanel = document.getElementById("panel-login")!;
+    const registerPanel = document.getElementById("panel-register")!;
+
+    if (tab === "login") {
+      loginBtn.className = "flex-1 py-3 text-sm font-bold border-b-2 border-brand-600 text-brand-600 transition-colors";
+      registerBtn.className = "flex-1 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500 transition-colors hover:text-slate-700";
+      loginPanel.classList.remove("hidden");
+      registerPanel.classList.add("hidden");
+    } else {
+      registerBtn.className = "flex-1 py-3 text-sm font-bold border-b-2 border-brand-600 text-brand-600 transition-colors";
+      loginBtn.className = "flex-1 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500 transition-colors hover:text-slate-700";
+      registerPanel.classList.remove("hidden");
+      loginPanel.classList.add("hidden");
+    }
+  }
+  (window as any).switchTab = switchTab;
+</script>

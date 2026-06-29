@@ -1,0 +1,56 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Container from "@components/Container.astro";
+---
+<BaseLayout
+  title="Over SnelSlagen.nl | Wie zijn wij?"
+  description="SnelSlagen.nl helpt je snel slagen voor je CBR theorie-examen. Al 9 jaar online, meer dan 423.000 cursisten."
+>
+  <div class="bg-slate-900 text-white">
+    <Container class="py-14">
+      <p class="text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">Over ons</p>
+      <h1 class="text-4xl font-extrabold tracking-tight">SnelSlagen.nl</h1>
+      <p class="mt-3 text-slate-400 max-w-xl">Al meer dan 9 jaar helpen we mensen snel slagen voor hun rijbewijs theorie-examen.</p>
+    </Container>
+  </div>
+
+  <Container class="max-w-3xl py-(--spacing-section)">
+    <div class="article-prose">
+      <h2>Wat is SnelSlagen.nl?</h2>
+      <p>
+        SnelSlagen.nl is een online platform voor mensen die snel en efficiënt hun CBR theorie-examen willen halen. We bieden een complete cursus, oefenexamens en een uitgebreide blog over alles wat met rijbewijs en theorie te maken heeft.
+      </p>
+
+      <h2>Onze aanpak</h2>
+      <p>
+        Snel slagen begint bij goede voorbereiding. Onze cursus is opgebouwd rondom de officiële CBR-leerdoelen, met duidelijke uitleg, oefenvragen en een verkeersbordenmodule. Meer dan 423.000 cursisten gingen je voor.
+      </p>
+
+      <h2>Voor wie?</h2>
+      <p>
+        Voor iedereen die zijn of haar rijbewijs wil halen: jong, oud, eerste keer of herexamen. Onze cursus werkt op elk apparaat en op je eigen tempo.
+      </p>
+
+      <h2>Gratis oefenen</h2>
+      <p>
+        Naast de betaalde cursus bieden we ook gratis oefenmogelijkheden aan. De <a href="/verkeersborden-oefenen/">verkeersborden quiz</a> is volledig gratis en vereist geen account.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Vragen of feedback? Neem contact met ons op via de <a href="/contact/">contactpagina</a>. We reageren binnen 1 werkdag.
+      </p>
+    </div>
+
+    <div class="mt-10 grid sm:grid-cols-2 gap-4">
+      <a href="/cursus/" class="block border-2 border-slate-200 p-5 hover:border-brand-500 transition-colors group">
+        <p class="font-bold text-slate-900 group-hover:text-brand-600">Bekijk de cursus</p>
+        <p class="text-sm text-slate-500 mt-1">Kies een pakket en start vandaag nog.</p>
+      </a>
+      <a href="/verkeersborden-oefenen/" class="block border-2 border-slate-200 p-5 hover:border-brand-500 transition-colors group">
+        <p class="font-bold text-slate-900 group-hover:text-brand-600">Gratis quiz</p>
+        <p class="text-sm text-slate-500 mt-1">Oefen verkeersborden, geen account nodig.</p>
+      </a>
+    </div>
+  </Container>
+</BaseLayout>

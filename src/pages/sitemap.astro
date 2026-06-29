@@ -1,0 +1,50 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Container from "@components/Container.astro";
+import { getCollection } from "astro:content";
+import { getAllPosts, displayTitle } from "@lib/posts";
+
+const CLEAN = /^[a-z0-9][a-z0-9-]*$/;
+const RESERVED = new Set(["home", "contact", "verkeersborden-oefenen", "cursus", "mijn-account", "over-ons", "blog"]);
+const pages = (await getCollection("pages"))
+  .filter((p) => CLEAN.test(p.id) && !RESERVED.has(p.id))
+  .map((p) => ({ slug: p.id, title: p.data.title || p.id }))
+  .sort((a, b) => a.title.localeCompare(b.title, "nl"));
+const posts = await getAllPosts();
+
+const main = [
+  { href: "/", title: "Home" },
+  { href: "/cursus/", title: "Cursus" },
+  { href: "/verkeersborden-oefenen/", title: "Verkeersborden oefenen" },
+  { href: "/mijn-account/", title: "Mijn account" },
+  { href: "/blog/", title: "Blog" },
+  { href: "/over-ons/", title: "Over ons" },
+  { href: "/contact/", title: "Contact" },
+];
+---
+<BaseLayout title="Sitemap | SnelSlagen.nl" description="Overzicht van alle pagina's en artikelen op SnelSlagen.nl.">
+  <Container class="py-(--spacing-section)">
+    <h1 class="text-4xl font-extrabold tracking-tight text-slate-900">Sitemap</h1>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold text-slate-900">Hoofdpagina's</h2>
+      <ul class="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+        {main.map((p) => <li><a class="text-brand-700 hover:underline" href={p.href}>{p.title}</a></li>)}
+      </ul>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold text-slate-900">Onderwerpen ({pages.length})</h2>
+      <ul class="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+        {pages.map((p) => <li><a class="text-brand-700 hover:underline" href={`/${p.slug}/`}>{p.title}</a></li>)}
+      </ul>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-xl font-bold text-slate-900">Blogartikelen ({posts.length})</h2>
+      <ul class="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+        {posts.map((p) => <li><a class="text-brand-700 hover:underline" href={`/${p.id}/`}>{displayTitle(p)}</a></li>)}
+      </ul>
+    </section>
+  </Container>
+</BaseLayout>

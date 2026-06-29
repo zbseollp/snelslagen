@@ -1,0 +1,97 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Container from "@components/Container.astro";
+const ACCESS_KEY = import.meta.env.WEB3FORMS_ACCESS_KEY || "";
+---
+<BaseLayout
+  title="Contact | SnelSlagen.nl"
+  description="Neem contact op met SnelSlagen.nl. Vragen over je cursus of theorie-examen? We reageren binnen 1 werkdag."
+>
+  <div class="bg-slate-900 text-white">
+    <Container class="py-14">
+      <p class="text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">Stel je vraag</p>
+      <h1 class="text-4xl font-extrabold tracking-tight">Contact</h1>
+      <p class="mt-3 text-slate-400 max-w-lg">Heb je een vraag over je cursus of het theorie-examen? Stuur ons een bericht, we reageren binnen 1 werkdag.</p>
+    </Container>
+  </div>
+
+  <Container class="py-(--spacing-section)">
+    <div class="grid lg:grid-cols-2 gap-12 max-w-4xl">
+      <!-- Form -->
+      <div>
+        <form
+          id="contact-form"
+          action="https://api.web3forms.com/submit"
+          method="POST"
+          class="space-y-5"
+        >
+          <input type="hidden" name="access_key" value={ACCESS_KEY} />
+          <input type="hidden" name="redirect" value="https://snelslagen.nl/contact/thanks/" />
+          <input type="checkbox" name="botcheck" class="hidden" style="display:none" />
+
+          <div>
+            <label for="name" class="block text-sm font-medium text-slate-700 mb-1.5">Naam</label>
+            <input
+              id="name" name="name" type="text" required placeholder="Jouw naam"
+              class="w-full border border-slate-200 px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+            />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-slate-700 mb-1.5">E-mailadres</label>
+            <input
+              id="email" name="email" type="email" required placeholder="jouw@email.nl"
+              class="w-full border border-slate-200 px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+            />
+          </div>
+          <div>
+            <label for="subject" class="block text-sm font-medium text-slate-700 mb-1.5">Onderwerp</label>
+            <select
+              id="subject" name="subject"
+              class="w-full border border-slate-200 px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+            >
+              <option>Vraag over cursus</option>
+              <option>Technisch probleem</option>
+              <option>Factuur of betaling</option>
+              <option>Anders</option>
+            </select>
+          </div>
+          <div>
+            <label for="message" class="block text-sm font-medium text-slate-700 mb-1.5">Bericht</label>
+            <textarea
+              id="message" name="message" required rows="5" placeholder="Typ je bericht hier..."
+              class="w-full border border-slate-200 px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 resize-none"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-brand-600 text-white font-bold py-3 hover:bg-brand-700 transition-colors text-sm"
+          >Verstuur bericht</button>
+        </form>
+      </div>
+
+      <!-- Info -->
+      <div class="space-y-6">
+        <div class="bg-slate-50 border border-slate-100 p-6">
+          <h2 class="font-bold text-slate-900 mb-3">Veelgestelde vragen</h2>
+          <ul class="space-y-3 text-sm">
+            <li><a href="/cursus/" class="text-brand-600 hover:underline">Hoe werkt de cursus?</a></li>
+            <li><a href="/cursus/" class="text-brand-600 hover:underline">Wat kost de cursus?</a></li>
+            <li><a href="/verkeersborden-oefenen/" class="text-brand-600 hover:underline">Hoe werkt de gratis quiz?</a></li>
+            <li><a href="/mijn-account/" class="text-brand-600 hover:underline">Hoe log ik in?</a></li>
+          </ul>
+        </div>
+
+        <div class="bg-brand-50 border border-brand-100 p-6">
+          <h2 class="font-bold text-brand-800 mb-1">Reactietijd</h2>
+          <p class="text-sm text-brand-700">We reageren doorgaans binnen 1 werkdag op berichten die via dit formulier worden gestuurd.</p>
+        </div>
+
+        <div class="border border-slate-200 p-6">
+          <h2 class="font-bold text-slate-900 mb-1">Geen account nodig</h2>
+          <p class="text-sm text-slate-500">Je kunt gratis oefenen zonder account. Alleen voor de betaalde cursus heb je een account nodig.</p>
+          <a href="/verkeersborden-oefenen/" class="mt-3 inline-block text-sm font-bold text-brand-600 hover:underline">Gratis quiz starten →</a>
+        </div>
+      </div>
+    </div>
+  </Container>
+</BaseLayout>

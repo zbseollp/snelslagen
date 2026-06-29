@@ -1,0 +1,179 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Container from "@components/Container.astro";
+
+const products = [
+  {
+    name: "Basis",
+    price: "9,99",
+    period: "eenmalig",
+    desc: "Alles om te starten met je theorievoorbereiding.",
+    features: [
+      "Volledige theoriecursus online",
+      "Verkeersborden module",
+      "Oefenvragen in CBR-stijl",
+      "30 dagen toegang",
+    ],
+    cta: "Start nu voor €9,99",
+    highlighted: false,
+  },
+  {
+    name: "Compleet",
+    price: "14,00",
+    period: "eenmalig",
+    desc: "De meest gekozen optie. Meer oefening, meer kans op slagen.",
+    features: [
+      "Alles uit het Basis pakket",
+      "Gevaarherkenning video's",
+      "Onbeperkte oefenexamens",
+      "90 dagen toegang",
+      "Slagingsgarantie",
+    ],
+    cta: "Kies Compleet — €14,00",
+    highlighted: true,
+  },
+  {
+    name: "Premium",
+    price: "19,99",
+    period: "eenmalig",
+    desc: "De complete set voor wie zeker wil slagen.",
+    features: [
+      "Alles uit het Compleet pakket",
+      "Persoonlijke voortgangsmeting",
+      "Video-uitleg per onderwerp",
+      "Onbeperkte toegang",
+      "Prioriteit e-mailsupport",
+    ],
+    cta: "Kies Premium — €19,99",
+    highlighted: false,
+  },
+];
+
+const testimonials = [
+  { name: "Laura V.", loc: "Amsterdam", text: "In twee weken geslaagd. De oefenexamens zijn bijna identiek aan het echte CBR-examen.", stars: 5 },
+  { name: "Daan K.", loc: "Rotterdam", text: "Had het Compleet pakket. Helder uitgelegd, goede oefenvragen. Eerste keer geslaagd!", stars: 5 },
+  { name: "Sara M.", loc: "Utrecht", text: "De slagingsgarantie gaf me vertrouwen. En het klopte — geslaagd in één keer.", stars: 5 },
+];
+
+const faqs = [
+  { q: "Hoe lang heb ik toegang?", a: "Dat hangt af van het pakket: Basis 30 dagen, Compleet 90 dagen, Premium onbeperkt. Meer dan genoeg om je voor te bereiden." },
+  { q: "Wat is de slagingsgarantie?", a: "Als je het Compleet of Premium pakket volgt en toch niet slaagt, krijg je gratis 90 dagen extra toegang. Geen gedoe." },
+  { q: "Werkt het ook op mijn telefoon?", a: "Ja. De cursus werkt op elk apparaat: telefoon, tablet of laptop." },
+  { q: "Is er een proefperiode?", a: "Je kunt gratis de verkeersborden quiz oefenen via onze site. Dat geeft een goed beeld van de kwaliteit." },
+  { q: "Hoe betaal ik?", a: "Via iDEAL, creditcard of PayPal. Betaling gaat via een beveiligde omgeving. Eenmalig bedrag, geen abonnement." },
+];
+---
+<BaseLayout
+  title="Theorie cursus — Snel slagen voor je rijbewijs | SnelSlagen.nl"
+  description="De complete theorie cursus voor je CBR rijbewijs. Kies Basis (€9,99), Compleet (€14,00) of Premium (€19,99). Directe toegang, slagingsgarantie."
+>
+  <!-- Page header -->
+  <div class="bg-slate-900 text-white">
+    <Container class="py-14">
+      <p class="text-xs font-bold uppercase tracking-widest text-brand-400 mb-3">Theorie cursuspakketten</p>
+      <h1 class="text-4xl font-extrabold tracking-tight">Snel slagen voor je rijbewijs</h1>
+      <p class="mt-3 text-slate-400 max-w-xl">Directe toegang tot de complete theorie cursus. Geen abonnement, geen verborgen kosten. Eenmalig betalen, meteen starten.</p>
+    </Container>
+  </div>
+
+  <!-- Trust bar -->
+  <div class="bg-brand-600 text-white">
+    <Container class="py-3">
+      <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-1 text-sm">
+        <span class="font-bold">423.033 cursisten gingen je voor</span>
+        <span class="hidden sm:block text-brand-300">·</span>
+        <span>80% slaagt in de eerste poging</span>
+        <span class="hidden sm:block text-brand-300">·</span>
+        <span>Slagingsgarantie op Compleet en Premium</span>
+      </div>
+    </Container>
+  </div>
+
+  <!-- Pricing -->
+  <section class="py-(--spacing-section)">
+    <Container>
+      <div class="grid sm:grid-cols-3 gap-5 max-w-4xl mx-auto">
+        {products.map((p) => (
+          <div class:list={["relative flex flex-col border-2 bg-white", p.highlighted ? "border-brand-600 shadow-xl" : "border-slate-200"]}>
+            {p.highlighted && (
+              <div class="absolute -top-3.5 left-1/2 -translate-x-1/2">
+                <span class="bg-brand-600 text-white text-[11px] font-black uppercase tracking-wider px-3 py-1">Meest gekozen</span>
+              </div>
+            )}
+            <div class="p-7 flex flex-col flex-1">
+              <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">{p.name}</p>
+              <div class="flex items-end gap-1 mb-2">
+                <span class="text-4xl font-black text-slate-900">€{p.price}</span>
+                <span class="text-slate-400 text-sm mb-1.5">{p.period}</span>
+              </div>
+              <p class="text-sm text-slate-500 mb-6 leading-relaxed">{p.desc}</p>
+              <ul class="space-y-3 flex-1 mb-8">
+                {p.features.map((f) => (
+                  <li class="flex items-start gap-2.5 text-sm text-slate-700">
+                    <svg class="w-4 h-4 text-brand-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <a href="/mijn-account/" class:list={["block text-center font-bold py-3.5 text-sm transition-colors", p.highlighted ? "bg-brand-600 text-white hover:bg-brand-700" : "border-2 border-slate-200 text-slate-700 hover:border-brand-500 hover:text-brand-600"]}>
+                {p.cta}
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="text-center text-xs text-slate-400 mt-6">Veilige betaling via iDEAL, creditcard of PayPal. Eenmalig, geen abonnement.</p>
+    </Container>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="bg-slate-50 border-y border-slate-100">
+    <Container class="py-(--spacing-section)">
+      <h2 class="text-2xl font-extrabold text-slate-900 text-center mb-8">Wat cursisten zeggen</h2>
+      <div class="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        {testimonials.map((t) => (
+          <div class="bg-white border border-slate-200 p-6">
+            <div class="flex gap-0.5 mb-3">
+              {Array.from({ length: t.stars }).map(() => (
+                <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              ))}
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed italic">"{t.text}"</p>
+            <p class="mt-4 text-xs font-bold text-slate-900">{t.name} <span class="text-slate-400 font-normal">— {t.loc}</span></p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <Container class="py-(--spacing-section) max-w-2xl">
+      <h2 class="text-2xl font-extrabold text-slate-900 mb-8">Veelgestelde vragen</h2>
+      <div class="divide-y divide-slate-100">
+        {faqs.map((faq) => (
+          <details class="group py-5">
+            <summary class="flex items-center justify-between cursor-pointer font-semibold text-slate-900 gap-4 list-none">
+              {faq.q}
+              <svg class="w-5 h-5 text-slate-400 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <p class="mt-3 text-slate-500 text-sm leading-relaxed">{faq.a}</p>
+          </details>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- CTA band -->
+  <section class="bg-brand-600 text-white">
+    <Container class="py-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div>
+        <h2 class="text-xl font-extrabold">Klaar om te starten?</h2>
+        <p class="mt-1 text-brand-200 text-sm">Directe toegang. Vandaag beginnen, snel slagen.</p>
+      </div>
+      <a href="/mijn-account/" class="shrink-0 inline-flex items-center bg-white text-brand-700 font-bold px-7 py-3 hover:bg-brand-50 transition-colors text-sm">
+        Maak een account aan →
+      </a>
+    </Container>
+  </section>
+</BaseLayout>

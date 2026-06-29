@@ -1,0 +1,78 @@
+# WordPress/legacy systeempaden
+/wp-admin/*        /404/   301
+/wp-login.php      /404/   301
+/blog/wp-admin/*   /blog/  301
+/blog/wp-login.php /blog/  301
+/blog/feed/        /blog/  301
+/blog/feed/*       /blog/  301
+
+# Dode/legacy routes
+/quiz/             /verkeersborden-oefenen/   301
+/quiz              /verkeersborden-oefenen/   301
+/exams/*           /verkeersborden-oefenen/   301
+/exams             /verkeersborden-oefenen/   301
+
+# Near-duplicate pagina-consolidatie
+/alleborden/       /alle-verkeersborden/      301
+
+# Oude blog-slugs (renames) -> root (specifiek, vóór de wildcard)
+/blog/rijden-met-een-start-stopsysteem-zonder-extra-zorgen/  /rijden-met-een-start-stopsysteem/  301
+/blog/jordan-4-kinderen-hoe-zit-het-met-de-kinderen-van-michael-jordan/  /jordan-4-kinderen/  301
+/blog/danny-vera-kinderen-heeft-danny-vera-kinderen/  /danny-vera-kinderen/  301
+/blog/arjen-kamphuis-vriendin-had-hij-een-partner/  /arjen-kamphuis-vriendin/  301
+/blog/is-sarah-van-soelen-zwanger-dit-is-wat-bekend-is/  /sarah-van-soelen-zwanger/  301
+/blog/taylor-swift-vriendin-hoe-zit-het-met-haar-liefdesleven/  /taylor-swift-vriendin/  301
+/blog/paul-jansen-gescheiden-dit-is-wat-bekend-is/  /paul-jansen-gescheiden/  301
+/blog/robert-doornbos-gescheiden-dit-is-wat-bekend-is/  /robert-doornbos-gescheiden/  301
+/blog/jan-dulles-kinderen-hoeveel-kinderen-heeft-hij/  /jan-dulles-kinderen/  301
+/blog/wesley-dijs-vriendin-wie-is-zijn-partner/  /wesley-dijs-vriendin/  301
+/blog/dochter-danny-blind-wie-is-frenkie-blind/  /dochter-danny-blind/  301
+/blog/moeder-jeffrey-en-emma-naam-wat-is-bekend/  /moeder-jeffrey-en-emma-naam/  301
+/blog/marloes-buitelaar-stefan-de-vrij-vriendin-wie-is-zij/  /marloes-buitelaar-stefan-de-vrij-vriendin/  301
+/blog/dochter-eminem-hailie-wie-is-hailie-jade/  /dochter-eminem-hailie/  301
+/blog/eva-van-de-wijdeven-partner-wat-is-er-bekend/  /eva-van-de-wijdeven-partner/  301
+/blog/michelle-bollen-getrouwd-hoe-zit-het-met-haar-huwelijk/  /michelle-bollen-getrouwd/  301
+/blog/kees-rijninks-leeftijd-hoe-oud-is-de-filmmaker/  /kees-rijninks-leeftijd/  301
+/blog/bas-beerens-vriendin-wat-is-er-bekend/  /bas-beerens-vriendin/  301
+/blog/cynthia-spiering-leeftijd-hoe-oud-is-de-influencer/  /cynthia-spiering-leeftijd/  301
+/blog/peter-van-zadelhoff-partner-wie-is-zijn-vriendin/  /peter-van-zadelhoff-partner/  301
+/blog/piet-van-schaften-leeftijd-hoe-oud-is-hij/  /piet-van-schaften-leeftijd/  301
+/blog/kinderen-van-rico-verhoeven-hoeveel-heeft-hij/  /kinderen-van-rico-verhoeven/  301
+/blog/sara-rottenberg-leeftijd-hoe-oud-is-de-ondernemer/  /sara-rottenberg-leeftijd/  301
+/blog/bram-moszkowicz-vriendin-leeftijd-hoe-oud-is-zij/  /bram-moszkowicz-vriendin-leeftijd/  301
+/blog/thomas-didillon-vriendin-heeft-de-keeper-een-relatie/  /thomas-didillon-vriendin/  301
+/blog/paul-elstak-gelredome-leeftijd-hoe-oud-is-de-dj/  /paul-elstak-gelredome-leeftijd/  301
+/blog/sierra-leone-bolle-jos-vriendin-wat-is-er-bekend/  /sierra-leone-bolle-jos-vriendin/  301
+/blog/tom-dumoulin-kinderen-heeft-hij-een-gezin/  /tom-dumoulin-kinderen/  301
+/blog/monique-smit-partner-wie-is-haar-vriend/  /monique-smit-partner/  301
+/blog/john-travolta-leeftijd-grease-hoe-oud-was-hij/  /john-travolta-leeftijd-grease/  301
+/blog/rudolf-van-den-berg-getrouwd-heeft-hij-een-partner/  /rudolf-van-den-berg-getrouwd/  301
+/blog/beatrice-de-graaf-getrouwd-met-wie-is-haar-man/  /beatrice-de-graaf-getrouwd-met/  301
+/blog/peter-gillis-leeftijd-hoe-oud-is-de-ondernemer/  /peter-gillis-leeftijd/  301
+/blog/janet-jackson-zoon-heeft-de-zangeres-een-kind/  /janet-jackson-zoon/  301
+/blog/afkomst-maria-tailor-waar-komt-ze-vandaan/  /afkomst-maria-tailor/  301
+/blog/ed-stoop-leeftijd-hoe-oud-is-de-sportpresentator/  /ed-stoop-leeftijd/  301
+/blog/kinderen-maurice-steijn-heeft-hij-een-gezin/  /kinderen-maurice-steijn/  301
+/blog/ex-vriendin-andre-hazes-wie-waren-zijn-relaties/  /ex-vriendin-andre-hazes/  301
+/blog/minister-hermans-partner-heeft-sophie-hermans-een-relatie/  /minister-hermans-partner/  301
+/blog/jan-femer-dochter-heeft-hij-een-kind/  /jan-femer-dochter/  301
+/blog/eduard-de-vos-van-steenwijk-leeftijd-hoe-oud-is-hij/  /eduard-de-vos-van-steenwijk-leeftijd/  301
+/blog/vriend-van-roxy-dekker-heeft-ze-een-relatie/  /vriend-van-roxy-dekker/  301
+/blog/is-marcel-veenendaal-getrouwd-dit-is-wat-bekend-is/  /is-marcel-veenendaal-getrouwd/  301
+/blog/dochter-jessica-durlacher-wie-is-solomonica/  /dochter-jessica-durlacher/  301
+/blog/robert-paul-leeftijd-hoe-oud-is-de-comedian/  /robert-paul-leeftijd/  301
+/blog/heeft-jake-paul-kinderen-dit-is-wat-bekend-is/  /heeft-jake-paul-kinderen/  301
+/blog/erik-bos-leeftijd-hoe-oud-is-de-sunweb-oprichter/  /erik-bos-leeftijd/  301
+/blog/vader-wesley-sneijder-overleden-dit-is-wat-er-bekend-is/  /vader-wesley-sneijder-overleden/  301
+/blog/zoon-henk-bleker-wat-is-er-bekend-over-zijn-kinderen/  /henk-bleker-zoon/  301
+/blog/vriend-lotte-kopecky-leeftijd-hoe-oud-is-haar-partner/  /vriend-lotte-kopecky-leeftijd/  301
+/blog/mason-garments-kinderen-heeft-de-oprichter-een-gezin/  /mason-garments-kinderen/  301
+/blog/meta-omschrijving-elektrisch-rijden-als-eerste-auto-ontdek-waarom-een-mobiele-thuislader-type-2-de-slimste-en-voordeligste-keuze-is-voor-nieuwe-autorijders-in-nederland/  /elektrisch-rijden-als-nieuwe-autorijder-alles-over-de-mobiele-thuislader-type-2/  301
+
+# Consolidatie + junk (specifiek, vóór de wildcard)
+/blog/transport-naar-het-buitenland/  /transport-naar-het-buitenland-waar-te-beginnen/  301
+/blog/test/  /blog/  301
+
+# Blogposts naar root. Named placeholder matcht /blog/<post>/ maar NIET de kale /blog/ (geen loop).
+/blog/:slug/  /:slug/  301
+

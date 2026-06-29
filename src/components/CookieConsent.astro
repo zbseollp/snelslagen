@@ -1,0 +1,41 @@
+---
+---
+<div
+  data-consent
+  hidden
+  class="fixed inset-x-0 bottom-0 z-[80] border-t border-slate-200 bg-white/95 backdrop-blur"
+  role="dialog" aria-label="Cookie-toestemming" aria-live="polite"
+>
+  <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+    <p class="text-sm text-slate-600">
+      We gebruiken alleen anonieme statistieken (Google Analytics) om de site te verbeteren.
+      Geef je toestemming?
+    </p>
+    <div class="flex shrink-0 gap-3">
+      <button data-consent-reject class="rounded-xl bg-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-800 transition hover:bg-slate-300">Weigeren</button>
+      <button data-consent-accept class="rounded-xl bg-brand-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-800">Accepteren</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const KEY = "ato-consent";
+  const banner = document.querySelector("[data-consent]") as HTMLElement | null;
+  const open = () => banner && (banner.hidden = false);
+  const close = () => banner && (banner.hidden = true);
+  if (!localStorage.getItem(KEY)) open();
+
+  document.querySelector("[data-consent-accept]")?.addEventListener("click", () => {
+    localStorage.setItem(KEY, "granted");
+    window.dispatchEvent(new CustomEvent("consent:granted"));
+    close();
+  });
+  document.querySelector("[data-consent-reject]")?.addEventListener("click", () => {
+    localStorage.setItem(KEY, "denied");
+    close();
+  });
+  // Footer "Cookie-instellingen" re-opens the banner
+  document.querySelectorAll("[data-open-consent]").forEach((b) =>
+    b.addEventListener("click", open)
+  );
+</script>

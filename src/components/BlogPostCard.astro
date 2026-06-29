@@ -1,0 +1,49 @@
+---
+import type { Post } from "@lib/posts";
+import { displayTitle, displayDescription, formatDate } from "@lib/posts";
+interface Props { post: Post; eager?: boolean }
+const { post, eager = false } = Astro.props;
+const { featuredImage: fmImage, featuredImageAlt, date } = post.data;
+const bodyImage = !fmImage
+  ? post.body?.match(/<img[^>]+src=["']?([^"'\s>]+)["']?/i)?.[1]
+  : undefined;
+const featuredImage = fmImage ?? bodyImage;
+const title = displayTitle(post);
+const desc = displayDescription(post);
+const href = `/${post.id}/`;
+---
+<article class="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition hover:shadow-md hover:ring-brand-300">
+  <a href={href} class="relative block overflow-hidden" aria-label={title}>
+    {featuredImage ? (
+      <>
+        <img
+          src={featuredImage}
+          alt={featuredImageAlt || title}
+          width="640" height="360"
+          loading={eager ? "eager" : "lazy"}
+          decoding={eager ? "sync" : "async"}
+          class="aspect-video w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+      </>
+    ) : (
+      <div class="aspect-video w-full bg-gradient-to-br from-brand-600 via-brand-500 to-brand-700 flex items-end p-4">
+        <span class="text-lg font-extrabold text-white/80">AutoTheorie.nl</span>
+      </div>
+    )}
+  </a>
+  <div class="flex flex-1 flex-col p-5">
+    <time datetime={date.toISOString()}
+      class="text-xs font-semibold uppercase tracking-wide text-brand-600">
+      {formatDate(date)}
+    </time>
+    <h2 class="mt-2 line-clamp-2 text-base font-bold leading-snug text-slate-900 transition group-hover:text-brand-700 sm:text-lg">
+      <a href={href}>{title}</a>
+    </h2>
+    {desc && <p class="mt-2 line-clamp-2 text-sm leading-relaxed text-slate-500">{desc}</p>}
+    <div class="mt-4 flex items-center gap-2">
+      <span class="h-2 w-2 rounded-full bg-brand-500"></span>
+      <a href={href} class="text-sm font-semibold text-brand-700 hover:underline">Lees verder</a>
+    </div>
+  </div>
+</article>

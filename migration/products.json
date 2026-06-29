@@ -1,0 +1,47 @@
+[
+  {
+    "title": "Auto theorie bundle",
+    "slug": "auto-theorie",
+    "price": "19.99"
+  },
+  {
+    "title": "Motor theorie bundle",
+    "slug": "motor-theorie",
+    "price": "19.99"
+  },
+  {
+    "title": "Scooter theorie bundle",
+    "slug": "scooter-theorie",
+    "price": "19.99"
+  },
+  {
+    "title": "Auto theorieboek",
+    "slug": "auto-theorieboek",
+    "price": "9.99"
+  },
+  {
+    "title": "Scooter theorieboek",
+    "slug": "bromfiets-theorieboek",
+    "price": "9.99"
+  },
+  {
+    "title": "Motor theorieboek",
+    "slug": "motor-theorieboek",
+    "price": "9.99"
+  },
+  {
+    "title": "Scooter training",
+    "slug": "scooter-training",
+    "price": "14"
+  },
+  {
+    "title": "Motor training",
+    "slug": "motor-training",
+    "price": "14"
+  },
+  {
+    "title": "Auto training",
+    "slug": "auto-training",
+    "price": "14"
+  }
+]

@@ -1,0 +1,15 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Container from "@components/Container.astro";
+---
+<BaseLayout title="Pagina niet gevonden (404) | SnelSlagen.nl" description="Deze pagina bestaat niet." noindex={true}>
+  <Container class="max-w-2xl py-(--spacing-section) text-center">
+    <p class="text-8xl font-black text-brand-600 leading-none">404</p>
+    <h1 class="mt-4 text-3xl font-extrabold text-slate-900">Pagina niet gevonden</h1>
+    <p class="mt-3 text-slate-500">Oeps, deze pagina bestaat niet (meer). Ga terug naar home of oefen alvast de verkeersborden.</p>
+    <div class="mt-8 flex justify-center gap-3 flex-wrap">
+      <a href="/" class="inline-flex items-center bg-brand-600 text-white font-bold px-6 py-2.5 text-sm hover:bg-brand-700 transition-colors">Naar home</a>
+      <a href="/verkeersborden-oefenen/" class="inline-flex items-center border-2 border-slate-200 text-slate-700 font-bold px-6 py-2.5 text-sm hover:border-brand-500 hover:text-brand-600 transition-colors">Gratis oefenen</a>
+    </div>
+  </Container>
+</BaseLayout>

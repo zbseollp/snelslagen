@@ -1,0 +1,20 @@
+---
+const GA_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || "";
+---
+{GA_ID && (
+  <script is:inline define:vars={{ GA_ID }}>
+    function loadGA() {
+      if (window.__gaLoaded) return; window.__gaLoaded = true;
+      const s = document.createElement("script");
+      s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag("js", new Date());
+      gtag("config", GA_ID, { anonymize_ip: true });
+    }
+    if (localStorage.getItem("ato-consent") === "granted") loadGA();
+    window.addEventListener("consent:granted", loadGA);
+  </script>
+)}
