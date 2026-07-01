@@ -1,7 +1,7 @@
 {
   "$schema": "https://astropayload.dev/schemas/config.json",
   "version": 1,
-  "tenantSlug": "autotheorie",
+  "tenantSlug": "snelslagen",
   "modules": ["blog"],
   "blogContentPath": "src/content/blog",
   "notes": "Blog content is synced from Payload on publish (CI). Do not edit src/content/blog in git for ongoing editorial work."
